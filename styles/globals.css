@@ -8,6 +8,16 @@
   color: white;
 }
 
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' bold,
+  'GRAD' 0,
+  'opsz' 48
+}
+
+
+
 .main {
   display: flex;
   flex-direction: column;
@@ -24,19 +34,23 @@
 }
 
 .table {
-  width: 500px;
+  max-width: 500px;
+  width: 90%;
   height: 300px;
   margin-top: 20px;
   border-radius: 30px;
+  background: rgba(255,255,255,0.1);
+  text-align: center;
 }
 
 .choiceButton {
-  padding: 7px 15px;
+  padding: 7px 10px;
   border-radius: 7px;
   border: none;
   font-weight: bold;
   cursor: pointer;
   scale: 1;
+  font-size: 15px;
 }
 
 .choiceButton:hover {
@@ -48,6 +62,210 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 10px;
   width: 100%;
+}
+.gamefield {
+  width: 100%;
+}
+
+.infotext {
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-weight: bold;
+  position: absolute;
+  margin-top: 170px;
+  animation: errtextanimation 1s linear forwards;
+  opacity: 0;
+}
+
+.success {
+  background: rgba(51, 163, 51, 0.5);
+}
+
+.wrong {
+  background: rgba(197, 66, 79, 0.9);
+}
+
+@keyframes errtextanimation {
+  0%{
+    margin-top: 250px;
+    opacity: 0;
+  }
+  20%{
+    opacity: 1;
+  }
+  80%{
+    opacity: 1;
+  }
+  100%{
+    margin-top: 100px;
+    opacity: 0;
+  }
+}
+
+.start {
+  position: absolute;
+  background: orange;
+  max-width: 300px;
+  width: 100%;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.1);
+  border-radius: 30px;
+}
+
+.startBtn {
+  padding: 10px 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  background: white;
+  color: black;
+  margin-bottom: 10px;
+}
+
+.startBtn:hover{
+  color: white;
+  background: black;
+}
+
+.again {
+  position: absolute;
+  top: 50px;
+  background: orange;
+  max-width: 300px;
+  width: 100%;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.1);
+  border-radius: 30px;
+}
+
+
+.flag {
+  cursor: pointer;
+}
+
+.flag:hover {
+  scale: 1.1;
+}
+
+.mainquestion {
+  font-size: 70px;
+}
+
+@media screen and (max-width: 460px) {
+  .mainquestion {
+    font-size: 50px;
+  }
+
+  .choiceButton {
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 340px) {
+  .mainquestion {
+    font-size: 40px;
+  }
+
+}
+
+.reset {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.resetbtn{ 
+  font-size: 30px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  scale: 1;
+}
+
+.resetbtn:hover {
+  animation: resetanimation 1s forwards;
+  scale: 1.1;
+}
+
+@keyframes resetanimation {
+  from{
+    rotate: 0deg;
+  }
+  to{
+    rotate: -360deg;
+  }
+}
+
+.submit {
+  position: fixed;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.9);
+  width: 100%;
+  height: 100vh;
+}
+
+.submitContainer {
+  max-width: 300px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+::placeholder{
+  text-align: center;
+}
+
+.submitContainer > input {
+  width: 100%;
+  padding: 10px 0;
+  border-radius: 10px;
+  border: none;
+  font-weight: bold;
+  text-align: center;
+}
+
+.closesubmit {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 30px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  scale: 1;
+}
+
+.closesubmit:hover {
+  scale: 1.1;
+}
+
+.submitErrText {
+  color: red;
+  font-weight: bold;
+}
+
+.records {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background: orange;
 }
