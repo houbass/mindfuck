@@ -8,6 +8,10 @@
   color: white;
 }
 
+p, h1, h2, h3, h4 {
+  cursor: default;
+}
+
 .material-symbols-outlined {
   font-variation-settings:
   'FILL' 0,
@@ -15,8 +19,6 @@
   'GRAD' 0,
   'opsz' 48
 }
-
-
 
 .main {
   display: flex;
@@ -266,6 +268,7 @@
 .records {
   display: flex;
   flex-direction: row;
-  width: 100%;
-  background: orange;
+  justify-content: space-between;
+  width: 90%;
+  margin-bottom: 2px;
 }

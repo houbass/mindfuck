@@ -10,7 +10,7 @@ import czImg from "pic/cz.svg";
 import enImg from "pic/en.svg";
 
 export default function Gamefield() {
-    const colors = ["red", "green", "blue", "orange", "yellow", "white", "pink"]
+    const colors = ["red", "green", "blue", "orange", "yellow", "white", "pink", "purple"]
     const beginning = [
         {
         index: 0,
@@ -47,13 +47,15 @@ export default function Gamefield() {
         name: "write your name here",
         errtextName: "*name is mandatory",
         errTextLong: "*name is too long",
+        top: "top ratings",
         red: "RED",
         green: "GREEN",
         blue: "BLUE",
         orange: "ORANGE",
         yellow: "YELLOW",
         white: "WHITE",
-        pink: "PINK"
+        pink: "PINK",
+        purple: "PURPLE"
     }
     
     const czText = {
@@ -64,20 +66,22 @@ export default function Gamefield() {
         success: "dobře",
         wrong: "špatně",
         totaltime: "celkový čas",
-        rating: "TVŮJ RATING",
+        rating: "VÁŠ RATING",
         submit: "ZAZNAMENAT",
         submitRating: "ZAZNAMENAT RATING",
         history: "vaše rating historie",
         name: "zde napiště vaše jméno",
         errtextName: "*jméno je povinné",
         errTextLong: "*jméno je moc dlouhé",
+        top: "nejlepší ratingy",
         red: "ČERVENÁ",
         green: "ZELENÁ",
         blue: "MODRÁ",
         orange: "ORANŽOVÁ",
         yellow: "ŽLUTÁ",
         white: "BÍLÁ",
-        pink: "RŮŽOVÁ"
+        pink: "RŮŽOVÁ",
+        purple: "FIALOVÁ"
     }
 
     //DATABASE DATA
@@ -116,7 +120,7 @@ export default function Gamefield() {
         id: doc.id, 
       }));
       filteredData.sort((a,b)=>{return a.rating - b.rating});
-      const slicedData = filteredData.slice(0, 10);
+      const slicedData = filteredData.slice(0, 100);
       setMyData(slicedData);
     } 
     catch (err) {
@@ -184,6 +188,9 @@ export default function Gamefield() {
                 break;
             case "pink":
                 text = language.pink;
+                break;
+            case "purple":
+                text = language.purple;
                 break;
             case "color":
                 text = "COLOR";
@@ -257,7 +264,6 @@ export default function Gamefield() {
         
         if(previousData.color === randomColor && previousData.version === version) {
             again();
-            console.log("again")
         }else{
             //V1
             if(version === 0){
@@ -464,8 +470,8 @@ export default function Gamefield() {
                     gap: "15px",
                     marginTop: "10px"
                 }}>
-                    <Image className="flag" src={enImg} width={30} onClick={enFun}/>
-                    <Image className="flag" src={czImg} width={25} onClick={czFun}/>
+                    <Image className="flag" src={enImg} width={30} onClick={enFun} alt="english" title="english"/>
+                    <Image className="flag" src={czImg} width={25} onClick={czFun} alt="czech" title="czech"/>
                 </div>
 
 
@@ -499,8 +505,8 @@ export default function Gamefield() {
                     gap: "15px",
                     marginTop: "10px"
                 }}>
-                    <Image className="flag" src={enImg} width={30} onClick={enFun}/>
-                    <Image className="flag" src={czImg} width={25} onClick={czFun}/>
+                    <Image className="flag" src={enImg} width={30} onClick={enFun} alt="english" title="english"/>
+                    <Image className="flag" src={czImg} width={25} onClick={czFun} alt="czech" title="czech"/>
                 </div>
                 <br/>
                 <p>{language.history}:</p>
@@ -533,18 +539,24 @@ export default function Gamefield() {
                 
                 <br />
                 <div 
+                className="center"
                 style={{
                     width: "100%"
                 }}>
-                    <p>top 10 records: </p>
-                    {myData?.map((item) => (
-                        <div 
-                        className="records"
-                        key={item.date}>
-                            <p>{item.name}</p>
-                            <p>{item.rating.toFixed(2)}</p>
-                        </div>
-                    ))}
+                    <p>{language.top}: </p>
+                    {myData?.map((item, index) => {
+                        const number = index + 1;
+
+                        return(
+                            <div 
+                            className="records" 
+                            title={"UTC: " + item.date}
+                            key={item.date}>
+                                <p>#{number} <strong>{item.name}</strong></p> 
+                                <p><strong>{item.rating.toFixed(2)}</strong></p>
+                            </div>
+                        )
+                    })}
                 </div>
 
             </div>
