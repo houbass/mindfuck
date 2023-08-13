@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import Image from "next/image";
 
 //firebase database
-import { db, storage } from "config/Firebase";
-import { getDocs, collection, addDoc, deleteDoc, updateDoc, doc } from "firebase/firestore";
+import { db } from "config/Firebase";
+import { collection, addDoc } from "firebase/firestore";
 
-//pic
-import czImg from "pic/cz.svg";
-import enImg from "pic/en.svg";
+//components
+import Languages from "./language/Languages";
+import Translator from "./language/Translator";
+import FinishedCard from "./FinishedCard";
+import Startcard from "./Startcard";
 
 export default function Gamefield() {
     const colors = ["red", "green", "blue", "orange", "yellow", "white", "pink", "purple"]
@@ -32,66 +33,16 @@ export default function Gamefield() {
         }, 
     ];
 
-    const enText = {
-        start: "START",
-        again: "TRY AGAIN",
-        textv1: "which color is written?",
-        textv2: "which color is the text?",
-        success: "success",
-        wrong: "wrong",
-        totaltime: "total time",
-        rating: "YOUR RATING",
-        submit: "SUBMIT",
-        submitRating: "SUBMIT YOUR RATING",
-        history: "your rating history",
-        name: "write your name here",
-        errtextName: "*name is mandatory",
-        errTextLong: "*name is too long",
-        top: "top ratings",
-        red: "RED",
-        green: "GREEN",
-        blue: "BLUE",
-        orange: "ORANGE",
-        yellow: "YELLOW",
-        white: "WHITE",
-        pink: "PINK",
-        purple: "PURPLE"
-    }
-    
-    const czText = {
-        start: "ZAČÍT",
-        again: "ZNOVU",
-        textv1: "jaká barva je napsaná?",
-        textv2: "jakou barvu má text?", 
-        success: "dobře",
-        wrong: "špatně",
-        totaltime: "celkový čas",
-        rating: "VÁŠ RATING",
-        submit: "ZAZNAMENAT",
-        submitRating: "ZAZNAMENAT RATING",
-        history: "vaše rating historie",
-        name: "zde napiště vaše jméno",
-        errtextName: "*jméno je povinné",
-        errTextLong: "*jméno je moc dlouhé",
-        top: "nejlepší ratingy",
-        red: "ČERVENÁ",
-        green: "ZELENÁ",
-        blue: "MODRÁ",
-        orange: "ORANŽOVÁ",
-        yellow: "ŽLUTÁ",
-        white: "BÍLÁ",
-        pink: "RŮŽOVÁ",
-        purple: "FIALOVÁ"
-    }
+    //LANGUAGES
+    const {enText} = Languages();
+    const [language, setLanguage] = useState(enText);
+    const {translateIt} = Translator(language);
 
     //DATABASE DATA
-    //REFRESH FETCHING STATE
     const contentCollectionRef = collection(db, "records");
     const [refresh, setRefresh] = useState(false);
-    const [myData, setMyData] = useState([]);
 
-    const [language, setLanguage] = useState(enText);
-
+    //GAME DATA
     const [gameData, setGameData] = useState(["white", "white"]);
     const [buttonsData, setButtonsData] = useState(beginning);
     const [previousData, setPreviousData] = useState("");
@@ -103,30 +54,12 @@ export default function Gamefield() {
     const [submitVisibility, setSubmitVisibility] = useState("hidden");
     const [submitBtnVisibility, setSubmitBtnVisibility] = useState({opacity: "1", events: "all"});
     const [name, setName] = useState("");
-    const [submitErrText, setSubmitErrText] = useState("");
 
     const [success, setSuccess] = useState(0);
     const [wrong, setWrong] = useState(0);
     const [totalTime, setTotalTime] = useState(0);
     const [totalRating, setTotalRating] = useState(0);
     const [ratingHistory, setRatingHistory] = useState([]);
-
-    //GET DATA FROM DATABASE
-    const getData = async () => {
-    try {
-      const data = await getDocs(contentCollectionRef);
-      const filteredData = data.docs.map((doc) => ({
-        ...doc.data(), 
-        id: doc.id, 
-      }));
-      filteredData.sort((a,b)=>{return a.rating - b.rating});
-      const slicedData = filteredData.slice(0, 100);
-      setMyData(slicedData);
-    } 
-    catch (err) {
-      console.error(err);
-    }
-    };
 
     //submit record
     const addSubmit = async() => {
@@ -146,65 +79,12 @@ export default function Gamefield() {
                 date: year + "/" + month + "/" + day + "/" + hour + ":" + minutes + ":" + seconds,
                 wrong: wrong
             });
+
             setRefresh(!refresh);
         }catch(err) {
             console.log(err);
         }
     } 
-
-    //language choice
-    function czFun() {
-        setLanguage(czText);
-    }
-
-    function enFun() {
-        setLanguage(enText);
-    }
-
-    //translator
-    function translateIt(color) {
-        let text;
-        switch(color) {
-            default:
-                text = "WHITE";
-                break;
-            case "red":
-                text = language.red;
-                break;
-            case "green":
-                text = language.green;
-                break;
-            case "blue":
-                text = language.blue;
-                break;
-            case "orange":
-                text = language.orange;
-                break;
-            case "yellow":
-                text = language.yellow;
-                break;
-            case "white":
-                text = language.white;
-                break;
-            case "pink":
-                text = language.pink;
-                break;
-            case "purple":
-                text = language.purple;
-                break;
-            case "color":
-                text = "COLOR";
-                break;
-            case "textv1":
-                text = language.textv1;
-                break;
-            case "textv2":
-                text = language.textv2;
-                break;
-        }
-
-        return text
-    }
 
     //INFO TEXT
     function createInfoText(result) {
@@ -262,6 +142,7 @@ export default function Gamefield() {
             filteredColor,
         ])
         
+        //prevent repeating
         if(previousData.color === randomColor && previousData.version === version) {
             again();
         }else{
@@ -404,29 +285,14 @@ export default function Gamefield() {
         setTotalRating(0);
     }
 
-    async function submitFun() {
+    function submitFun() {
         setSubmitVisibility("hidden");
         setSubmitBtnVisibility({opacity: "0", events: "none"});
     }
 
-    function submitValidation() {
-        if(name.length === 0){
-            setSubmitErrText(language.errtextName)
-        }
-        if(name.length >= 14){
-            setSubmitErrText(language.errTextLong)
-        }
-        if(name.length > 0 && name.length < 14){
-            submitFun();
-            addSubmit();
-            setSubmitErrText("");
-        }
-        
-    }
-
     useEffect(() => {
 
-        const rating = (totalTime / success) + (wrong * 4)
+        const rating = (totalTime / success) + (wrong * 4);
         setTotalRating(rating);
 
         if(success >= 10) {
@@ -441,174 +307,89 @@ export default function Gamefield() {
     }
     }, [success]);
 
-    //update data list
-    useEffect(() => {
-        getData();
-    }, [refresh]);
-
     return(
         <>
             <div className='center gamefield'>
-            <div className="reset">
-                <button 
-                onClick={restartFun}
-                className="material-symbols-outlined resetbtn" 
+                <div className="reset">
+                    <button 
+                    onClick={restartFun}
+                    className="material-symbols-outlined resetbtn" 
+                    style={{
+                        visibility: GamefieldVisibility
+                    }}>restart_alt</button>
+                </div>
+
+                <Startcard 
+                startVisibility={startVisibility} 
+                letsStart={letsStart} 
+                language={language} 
+                setLanguage={setLanguage}
+                />
+
+                <FinishedCard 
+                refresh={refresh} 
+                language={language} 
+                setLanguage={setLanguage}
+                againVisibility={againVisibility}
+                totalRating={totalRating} 
+                submitBtnVisibility={submitBtnVisibility} 
+                wrong={wrong} 
+                totalTime={totalTime} 
+                letsStart={letsStart} 
+                ratingHistory={ratingHistory} 
+                submitVisibility={submitVisibility} 
+                setSubmitVisibility={setSubmitVisibility} 
+                addSubmit={addSubmit} 
+                submitFun={submitFun} 
+                name={name}
+                setName={setName} 
+                />
+
+                <div 
+                className='table center' 
+                id="table"
                 style={{
                     visibility: GamefieldVisibility
-                }}>restart_alt</button>
-            </div>
-            <div 
-            className="start" 
-            style={{
-                visibility: startVisibility,
-            }}>
-                <button className="startBtn" onClick={letsStart}>{language.start}</button>
-
-                <div
-                style={{
-                    display: "flex",
-                    gap: "15px",
-                    marginTop: "10px"
                 }}>
-                    <Image className="flag" src={enImg} width={30} onClick={enFun} alt="english" title="english"/>
-                    <Image className="flag" src={czImg} width={25} onClick={czFun} alt="czech" title="czech"/>
+                    <h2 
+                    style={{
+                        position: "absolute",
+                        marginTop: "-200px"
+                    }}>{translateIt(question)}</h2>
+                    <h1 
+                    className="mainquestion"
+                    style={{
+                    color: gameData[1]
+                    }}>{translateIt(gameData[0])}</h1>
+                    <p 
+                    style={{
+                        position: "absolute",
+                        marginTop: "250px"
+                    }}>{success} / 10</p>
                 </div>
-
-
-            </div>
-
-            <div 
-            className="again" 
-            style={{
-                visibility: againVisibility,
-            }}>
-                <h3>{language.rating}</h3>
-                <h1>{totalRating.toFixed(2)}</h1>
-                <button 
-                style={{
-                    opacity: submitBtnVisibility.opacity,
-                    pointerEvents: submitBtnVisibility.events
-                }}
-                className="startBtn" 
-                onClick={() => {setSubmitVisibility("visible")}} 
-                >{language.submitRating}</button>
                 
-                <p>{language.wrong}: {wrong}</p>
-                <p>{language.totaltime}: {Math.round(totalTime)}s</p>
-                <br/>
-                <button className="startBtn" onClick={letsStart}>{language.again}</button>
-                
-                
-                <div
-                style={{
-                    display: "flex",
-                    gap: "15px",
-                    marginTop: "10px"
-                }}>
-                    <Image className="flag" src={enImg} width={30} onClick={enFun} alt="english" title="english"/>
-                    <Image className="flag" src={czImg} width={25} onClick={czFun} alt="czech" title="czech"/>
-                </div>
-                <br/>
-                <p>{language.history}:</p>
-                {ratingHistory.map((item) => (
-                    <p>{item.toFixed(2)}</p>
-                ))}
-
                 <div 
-                className="submit" 
+                className='answers' 
                 style={{
-                    visibility: submitVisibility
-                }}
-                >
-                    <div 
-                    className="submitContainer">
-                        <input onChange={(e) => {setName(e.target.value)}} type="text" placeholder={language.name}></input>
-                        <p className="submitErrText">{submitErrText}</p>
-                        <button 
-                        onClick={submitValidation}
-                        className="startBtn" 
-                        style={{
-                            width: "fit-content"
-                        }}>{language.submit}</button>
-                    </div>
-
-                    <button 
-                    onClick={() => {setSubmitVisibility("hidden")}}
-                    className="material-symbols-outlined closesubmit">close</button>
-                </div>
-                
-                <br />
-                <div 
-                className="center"
-                style={{
-                    width: "100%"
+                    visibility: GamefieldVisibility
                 }}>
-                    <p>{language.top}: </p>
-                    {myData?.map((item, index) => {
-                        const number = index + 1;
+                    {buttonsData.map((item) => {
 
                         return(
-                            <div 
-                            className="records" 
-                            title={"UTC: " + item.date}
-                            key={item.date}>
-                                <p>#{number} <strong>{item.name}</strong></p> 
-                                <p><strong>{item.rating.toFixed(2)}</strong></p>
-                            </div>
+                            <button 
+                            key={item.index}
+                            onClick={() => {validatation(item)}}
+                            className='choiceButton' 
+                            style={{
+                                color: item.color,
+                                background: item.background
+                            }}>{translateIt(item.text)}
+                            </button>
                         )
                     })}
+
                 </div>
-
             </div>
-
-            <div 
-            className='table center' 
-            id="table"
-            style={{
-                visibility: GamefieldVisibility
-            }}>
-                <h2 
-                style={{
-                    position: "absolute",
-                    marginTop: "-200px"
-                }}>{translateIt(question)}</h2>
-                <h1 
-                className="mainquestion"
-                style={{
-                color: gameData[1]
-                }}>{translateIt(gameData[0])}</h1>
-                <p 
-                style={{
-                    position: "absolute",
-                    marginTop: "250px"
-                }}>{success} / 10</p>
-            </div>
-            
-            <div 
-            className='answers' 
-            style={{
-                visibility: GamefieldVisibility
-            }}>
-                {buttonsData.map((item) => {
-
-                    return(
-                        <button 
-                        key={item.index}
-                        onClick={() => {validatation(item)}}
-                        className='choiceButton' 
-                        style={{
-                            color: item.color,
-                            background: item.background
-                        }}>{translateIt(item.text)}
-                        </button>
-                    )
-                })}
-
-            </div>
-
-
-            </div>
-        
         </>
     )
 }
