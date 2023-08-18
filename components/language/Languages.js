@@ -57,7 +57,7 @@ export default function Languages() {
     const itText = {
         start: "INIZIO",
         again: "RIPROVA",
-        textv1: "Di che colore è scritto?",
+        textv1: "Che colore è scritto?",
         textv2: "Di che colore è il testo?",
         success: "successo",
         wrong: "sbagliato",
