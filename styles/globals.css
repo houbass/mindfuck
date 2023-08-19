@@ -181,6 +181,7 @@ a:hover {
 
 .mainquestion {
   font-size: 70px;
+  font-family: Arial
 }
 
 @media screen and (max-width: 460px) {

@@ -16,7 +16,7 @@ export default function Welcomepage() {
             }}>
                 <h1 style={{fontSize: "50px"}}>LET'S MINDFUCK YOURSELF</h1>
                 <br />
-                <p style={{fontSize: "25px", width: "70%"}}>So you think you are special? Test your cognitive skills and compare them with others.</p>
+                <p style={{fontSize: "25px", width: "70%"}}>So you think you are special? Test your cognitive functions and compare them with others.</p>
                 <Link href="/game">
                 TRY IT
                 </Link>
