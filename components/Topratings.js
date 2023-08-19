@@ -14,6 +14,7 @@ export default function Topratings({ language, refresh }) {
     //REFRESH FETCHING STATE
     const contentCollectionRef = collection(db, "records");
     const [myData, setMyData] = useState([]);
+    const [ratingFixed, setRatingFixed] = useState([]);
 
     //GET DATA FROM DATABASE
     const getData = async () => {
@@ -25,12 +26,44 @@ export default function Topratings({ language, refresh }) {
           }));
           filteredData.sort((a,b)=>{return a.rating - b.rating});
           const slicedData = filteredData.slice(0, 100);
+
           setMyData(slicedData);
+          setRatingFixed(
+            slicedData.map((el) => el.rating.toFixed(2))
+        )
         } 
         catch (err) {
           console.error(err);
         }
         };
+
+
+    //show rating on hover
+    function mouseEnterFun(item, index) {
+        setRatingFixed(
+            ratingFixed.map((el, elindex) => {
+                if(elindex === index){
+                    return item.rating.toFixed(5);
+                }
+
+                return el
+            })
+        )
+    }
+
+    //hide rating on hover
+    function mouseLeaveFun(item, index) {
+        setRatingFixed(
+            ratingFixed.map((el, elindex) => {
+                if(elindex === index){
+                    return item.rating.toFixed(2);
+                }
+
+                return el
+            })
+        )
+    }
+
 
     //update data list
     useEffect(() => {
@@ -54,7 +87,10 @@ export default function Topratings({ language, refresh }) {
                         title={"UTC: " + item.date}
                         key={item.date}>
                             <p>#{number} <strong>{item.name}</strong></p> 
-                            <p><strong>{item.rating.toFixed(2)}</strong></p>
+                            <p 
+                            onMouseEnter={() => mouseEnterFun(item, index)} 
+                            onMouseLeave={() => mouseLeaveFun(item, index)} 
+                            ><strong>{ratingFixed[index]}</strong></p>
                         </div>
                     )
                 })}
