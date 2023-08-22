@@ -26,7 +26,7 @@ export default function Home( ) {
         />
         <meta
           property="og:image"
-          content={ogimage}
+          content="https://firebasestorage.googleapis.com/v0/b/midfuckgame.appspot.com/o/mindfuckimage.png?alt=media&token=a8f50c62-6922-4d7f-81f1-6435b14b76de"
           key="image"
         />
         <meta
