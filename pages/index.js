@@ -26,7 +26,7 @@ export default function Home( ) {
         />
         <meta
           property="og:image"
-          href="/mindfuckgame.png"
+          href="https://cdn.midjourney.com/6f157fe0-adfa-4e4f-b5aa-f09bd3934726/0_0.png"
           key="image"
         />
         <meta
