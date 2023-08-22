@@ -10,15 +10,14 @@ export default function Welcomepage() {
             style={{
                 display: "flex",
                 flexDirection: "column",
-                //background: "orange",
                 maxWidth: "800px",
-                width: "100%"
+                width: "100%",
             }}>
                 <h1 style={{fontSize: "50px"}}>LET'S MINDFUCK YOURSELF</h1>
                 <br />
-                <p style={{fontSize: "25px", width: "70%"}}>So you think you are special? Test your cognitive functions and compare them with others.</p>
+                <p style={{fontSize: "25px", width: "70%"}}>So you think you are special? Test your cognitive functions and and try to be faster then others.</p>
                 <Link href="/game">
-                TRY IT
+                TEST ME
                 </Link>
 
 

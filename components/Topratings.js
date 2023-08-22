@@ -43,7 +43,7 @@ export default function Topratings({ language, refresh }) {
         setRatingFixed(
             ratingFixed.map((el, elindex) => {
                 if(elindex === index){
-                    return item.rating.toFixed(5);
+                    return item.rating.toFixed(4);
                 }
 
                 return el
@@ -84,12 +84,13 @@ export default function Topratings({ language, refresh }) {
                     return(
                         <div 
                         className="records" 
+                        onMouseEnter={() => mouseEnterFun(item, index)} 
+                        onMouseLeave={() => mouseLeaveFun(item, index)} 
                         title={"UTC: " + item.date}
                         key={item.date}>
                             <p>#{number} <strong>{item.name}</strong></p> 
                             <p 
-                            onMouseEnter={() => mouseEnterFun(item, index)} 
-                            onMouseLeave={() => mouseLeaveFun(item, index)} 
+
                             ><strong>{ratingFixed[index]}</strong></p>
                         </div>
                     )

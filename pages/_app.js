@@ -5,8 +5,8 @@ export default function App({ Component, pageProps }) {
   return (
     <>
         <Head>
-        <title>Mindfuck home</title>
-        <meta name="description" content="Test your cognitive skills and compare them with others." />
+        <title>Mindfuck game</title>
+        <meta name="description" content="Test your cognitive functions and and try to be faster then others." />
         <meta name="twitter:card" content="summary" />
         <meta
           property="og:title"
@@ -16,7 +16,7 @@ export default function App({ Component, pageProps }) {
 
         <meta
           property="og:description"
-          content="Test your cognitive skills and compare them with others." 
+          content="Test your cognitive functions and and try to be faster then others." 
         />
         <meta
           property="og:image"
@@ -28,11 +28,11 @@ export default function App({ Component, pageProps }) {
         />
         <meta
           property="og:image:width"
-          content="1024"
+          content="500"
         />
         <meta
           property="og:image:height"
-          content="1024"
+          content="500"
         />
 
         <meta name="author" content="Ondrej Laube" />
