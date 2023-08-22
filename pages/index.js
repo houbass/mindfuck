@@ -13,12 +13,32 @@ export default function Home( ) {
         <title>Mindfuck home</title>
         <meta name="description" content="Test your cognitive skills and compare them with others." />
         <meta
+          property="og:title"
+          content="Let's mindfuck yourself." 
+          key="title"
+        />
+
+        <meta
           property="og:description"
-          content="Test your cognitive skills and compare them with others."
+          content="Test your cognitive skills and compare them with others." 
+          key="description"
         />
         <meta
           property="og:image"
-          content="https://mindfuckgame.com/image?url=%2F_next%2Fstatic%2Fmedia%2Fmindfuckimage.5a0cfefb.png&amp;w=500&amp;q=75"
+          content="https://mindfuckgame.com/image?url=%2F_next%2Fstatic%2Fmedia%2Fmindfuckimage.5a0cfefb.png" 
+          key="image"
+        />
+        <meta
+          property="og:image:type"
+          content="image/png"
+        />
+        <meta
+          property="og:image:width"
+          content="500"
+        />
+        <meta
+          property="og:image:height"
+          content="500"
         />
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
