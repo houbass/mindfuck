@@ -26,7 +26,7 @@ export default function Home( ) {
         />
         <meta
           property="og:image"
-          content="https://firebasestorage.googleapis.com/v0/b/midfuckgame.appspot.com/o/mindfuckimage.png?alt=media&token=a8f50c62-6922-4d7f-81f1-6435b14b76de"
+          href="/mindfuckgame.png"
           key="image"
         />
         <meta
@@ -41,6 +41,8 @@ export default function Home( ) {
           property="og:image:height"
           content="500"
         />
+
+        <meta name="author" content="Ondrej Laube" />
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
