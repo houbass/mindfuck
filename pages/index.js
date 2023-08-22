@@ -4,6 +4,7 @@ import Script from 'next/script';
 
 //components
 import Welcomepage from '@/components/Welcomepage';
+import ogimage from "@/pic/mindfuckimage.png";
 
 
 export default function Home( ) {
@@ -25,7 +26,7 @@ export default function Home( ) {
         />
         <meta
           property="og:image"
-          content="https://mindfuckgame.com/image?url=%2F_next%2Fstatic%2Fmedia%2Fmindfuckimage.5a0cfefb.png" 
+          content={ogimage}
           key="image"
         />
         <meta
