@@ -6,6 +6,11 @@ export default function Welcomepage() {
 
     return(
         <>
+        <div
+        style={{
+            padding: "0px 20px"
+        }}
+        >
             <div
             style={{
                 display: "flex",
@@ -22,6 +27,7 @@ export default function Welcomepage() {
 
 
             </div>
+        </div>    
         </>
     )
 }

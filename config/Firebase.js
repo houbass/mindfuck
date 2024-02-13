@@ -1,5 +1,6 @@
-const apikey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
 
+// COMPONENTS
+import { apiKeys } from "./apiKeys";
 
 import { initializeApp } from "firebase/app";
 //import { getAnalytics } from "firebase/analytics";
@@ -14,13 +15,13 @@ import{ getFirestore } from "firebase/firestore";
 import{ getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-    apiKey: apikey,
+    apiKey: apiKeys.googleApiKey,
     authDomain: "midfuckgame.firebaseapp.com",
     projectId: "midfuckgame",
     storageBucket: "midfuckgame.appspot.com",
     messagingSenderId: "123458543400",
     appId: "1:123458543400:web:5089972fe61c9b0e0efa1d",
-    measurementId: "G-Z1WEJKD0E4"
+    measurementId: apiKeys.googleId
 };
 
 //firebase init

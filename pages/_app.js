@@ -1,7 +1,14 @@
 import '@/styles/globals.css'
 import Head from 'next/head';
+import Script from 'next/script';
+
+// COMPONENTS
+import Coockies from '@/components/Coockies';
+
 
 export default function App({ Component, pageProps }) {
+
+
   return (
     <>
         <Head>
@@ -45,7 +52,9 @@ export default function App({ Component, pageProps }) {
         <meta name="yandex-verification" content="62505ed5cd9f8f38" />
             
       </Head>
-      <Component {...pageProps} />
+
+      <Component {...pageProps} /> 
+      <Coockies />
     </>
 
   )
