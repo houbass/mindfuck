@@ -40,6 +40,10 @@ export default function App({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+        <meta name="seznam-wmt" content="8yiSqv2pEPwJm3SLPvfO2kclA9FzZ13V" />
+        <meta name="yandex-verification" content="62505ed5cd9f8f38" />
+            
       </Head>
       <Component {...pageProps} />
     </>
